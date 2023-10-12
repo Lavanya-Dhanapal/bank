@@ -19,8 +19,11 @@ void admin()
 		cin >> condition;
 		if (condition == 1)
 		{
-			string n = "", a = "";
-			int acc, p, b;
+			string n = "";
+			string a = "";
+			int acc;
+			int p;
+			int b;
 			cout << "enter name" << endl;
 			cin >> n;
 			cout << "enter adress" << endl;
@@ -57,7 +60,7 @@ void admin()
 		}
 		if (condition == 5)
 		{
-
+			//edit the account
 		}
 		if (condition == 6)
 		{
