@@ -77,56 +77,70 @@ void Hashtable:: display()
 		current = current->next;
 	}
 }
-void  Hashtable::loadhashtable()
+void Hashtable::loadhashtable()
 {
-	int acc = 0;
-	int r;
-	int pass;
+    ifstream read;
+    read.open("hashtable.txt");
 
-	ifstream read;
-	read.open("hashtable.txt");
-	while (!read.eof())
-	{
+    int acc = 0;
+    int r;
+    int pass;
 
-		read >> acc;
-		read >> pass;
-		if (match(acc, pass))
-		{
-			continue;
-		}
-		if (acc!= -858993460 && pass!= -858993460)
-		{
-			r = acc % 10;
+    while (read >> acc >> pass)
+    {
+        if (match(acc, pass) || acc == -858993460 || pass == -858993460)
+        {
+            // Skip invalid or duplicate entries.
+            continue;
+        }
 
-			Node * c = start;
-			while (c->data != r)
-			{
-				c = c->next;
-			}
-			
-			shared_ptr<Node_1> temp = make_shared<Node_1>(acc, pass);
-			if (c->pre == nullptr)
-			{
-				c->pre = temp;
-			}
-			else
-			{
-				Node_1 *root;
-				root = c->pre;
-				while (root->next != nullptr)
-				{
-					root = root->next;
-				}
-				root->next = temp;
-			}
-		}
-		else
-		{
-			cout << "NO password present" << endl;
-		}
-	}
-	read.close();
+        r = acc % 10;
+        Node *c = findNodeByData(r);
+        if (!c)
+        {
+            // Handle the case where the node doesn't exist.
+            continue;
+        }
+
+        std::shared_ptr<Node_1> temp = std::make_shared<Node_1>(acc, pass);
+        insertNode_1(c, temp);
+    }
+
+    read.close();
 }
+
+Node *Hashtable::findNodeByData(int data)
+{
+    Node *c = start;
+    while (c->data != data)
+    {
+        c = c->next;
+        if (!c)
+        {
+            // Handle the case where the desired node doesn't exist.
+            return nullptr;
+        }
+    }
+    return c;
+}
+
+void Hashtable::insertNode_1(Node *node, std::shared_ptr<Node_1> temp)
+{
+    if (node->pre == nullptr)
+    {
+        node->pre = temp;
+    }
+    else
+    {
+        Node_1 *root = node->pre;
+        while (root->next != nullptr)
+        {
+            root = root->next;
+        }
+        root->next = temp;
+    }
+}
+
 void  Hashtable::displayPasswords()
 {
 	starthash();
