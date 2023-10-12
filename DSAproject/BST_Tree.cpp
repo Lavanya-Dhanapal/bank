@@ -11,7 +11,7 @@ void BST_Tree::add_Account(string name, string adress, int accountno, int passwo
 	write.open("server.txt", ios::app);
 	write << name << endl << adress << endl << accountno << endl << password << endl << balance << endl;
 	write.close();
-	BST_Node * temp = new BST_Node(name, adress, accountno, password, balance);
+	auto temp = new BST_Node(name, adress, accountno, password, balance);
 
 	BST_Node * current = Root;
 	if (Root == nullptr)
@@ -48,7 +48,7 @@ void BST_Tree::add_Account(string name, string adress, int accountno, int passwo
 
 BST_Node* BST_Tree:: delete_Account(BST_Node * root, int accountno)
 {
-	//cout << "accountno"<<root->account_number;
+	
 	if (root == nullptr)
 		cout << "it seems that Tree is empty OR You have entered wrong data" << endl;
 	else if (accountno < root->account_number)
@@ -74,7 +74,7 @@ BST_Node* BST_Tree:: delete_Account(BST_Node * root, int accountno)
 			delete temp;
 		}
 	}
-	return(root);
+	return root;
 }
 void BST_Tree::withdraw(int accountno,int amount)
 {
@@ -150,7 +150,7 @@ void BST_Tree::deposit(int accountno,int amount)
 }
 void BST_Tree::editaccount_byAdmin()
 {
-
+	//account_edit
 }
 void BST_Tree::transfer(int sender_accountno,int reciever_accountno,int sender_amount)
 {
@@ -227,7 +227,7 @@ void BST_Tree::transfer(int sender_accountno,int reciever_accountno,int sender_a
 }
 void BST_Tree::transaction_history()
 {
-    
+    //printing transaction history
 }
 void BST_Tree:: findMax(BST_Node* root)
 {
@@ -248,7 +248,7 @@ void BST_Tree::load_Server()
 	int accountno = 0;
 	int password = 0;
 	int balance = 0;
-	//cin.ignore();
+	
 	while (!read.eof())
 	{
 		
@@ -261,17 +261,10 @@ void BST_Tree::load_Server()
 		read >> balance;
 		read.ignore();
 		read.ignore();
-/*
-		cout << name << endl;
-		cout << adress << endl;
-		cout << accountno << endl;
-		cout << password << endl;
-		cout << balance << endl;
-		
-		*/
+
 		if (name!="" && adress != "" && accountno != 0 && password != 0 )
 		{
-			//cout << "enter hua" << endl;
+			
 			BST_Node * temp = new BST_Node(name, adress, accountno, password, balance);
 			BST_Node * current = Root;
 			if (Root == nullptr)
