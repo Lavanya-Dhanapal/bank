@@ -265,7 +265,7 @@ void BST_Tree::load_Server()
 		if (name!="" && adress != "" && accountno != 0 && password != 0 )
 		{
 			
-			BST_Node * temp = new BST_Node(name, adress, accountno, password, balance);
+			auto temp = new BST_Node(name, adress, accountno, password, balance);
 			BST_Node * current = Root;
 			if (Root == nullptr)
 			{
@@ -333,12 +333,12 @@ void BST_Tree:: update_server(BST_Node *root)
 BST_Node* BST_Tree:: search (BST_Node* root, int accountno)
 {
 	if (root == nullptr)
-		return (nullptr);
+		return nullptr;
 	else if (accountno < root->account_number)
 		return (search(root->left, accountno));
 	else if (accountno > root->account_number)
 		return (search(root->right, accountno));
-	return (root);
+	return root;
 
 }
 void BST_Tree:: printoinfo(BST_Node* root)
