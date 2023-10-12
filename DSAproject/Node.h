@@ -11,5 +11,5 @@ public:
 	Node_1 * pre;
 	int data;
 	explicit Node();
-	Node(int);
+	explicit Node(int);
 };
