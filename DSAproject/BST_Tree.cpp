@@ -4,47 +4,48 @@
 BST_Tree:: BST_Tree() {
 
 }
-void BST_Tree::add_Account(string name, string adress, int accountno, int password, int balance)
+void BST_Tree::add_Account(string name, string address, int accountno, int password, int balance)
 {
-	h.add(accountno, password);
-	ofstream write;
-	write.open("server.txt", ios::app);
-	write << name << endl << adress << endl << accountno << endl << password << endl << balance << endl;
-	write.close();
-	auto temp = new BST_Node(name, adress, accountno, password, balance);
+    h.add(accountno, password);
 
-	BST_Node * current = Root;
-	if (Root == nullptr)
-	{
-		Root = temp;
-	}
-	else
-	{
-		while (true)
-		{
-			if (accountno < current->account_number)
-			{
-				if (current->left == nullptr)
-				{
-					current->left = temp;
-					break;
-				}
-				current = current->left;
-			}
+    ofstream write;
+    write.open("server.txt", ios::app);
+    write << name << endl << address << endl << accountno << endl << password << endl << balance << endl;
+    write.close();
 
-			if (accountno > current->account_number)
-			{
-				if (current->right == nullptr)
-				{
-					current->right = temp;
-					break;
-				}
-				current = current->right;
-			}
-		}
-	}
+    auto temp = make_shared<BST_Node>(name, address, accountno, password, balance);
+
+    BST_Node* current = Root;
+
+    if (Root == nullptr)
+    {
+        Root = temp;
+    }
+    else
+    {
+        while (true)
+        {
+            if (accountno < current->account_number)
+            {
+                if (current->left == nullptr)
+                {
+                    current->left = temp;
+                    break; // Break once when the insertion is done.
+                }
+                current = current->left;
+            }
+            else if (accountno > current->account_number)
+            {
+                if (current->right == nullptr)
+                {
+                    current->right = temp;
+                    break; // Break once when the insertion is done.
+                }
+                current = current->right;
+            }
+        }
+    }
 }
-
 
 BST_Node* BST_Tree:: delete_Account(BST_Node * root, int accountno)
 {
