@@ -1,6 +1,5 @@
 #pragma once
 # include <iostream>
-using namespace std;
 # include <fstream>
 # include <string>
 # include "Node_1.h"
@@ -11,6 +10,6 @@ public:
 	Node * next;
 	Node_1 * pre;
 	int data;
-	Node();
+	explicit Node();
 	Node(int);
 };
