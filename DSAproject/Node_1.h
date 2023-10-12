@@ -3,7 +3,7 @@
 class Node_1
 {
 public:
-	Node_1 * next;
+	Node_1 * next = nullptr;
 	int accountNumber;
 	int password;
 	Node_1();
