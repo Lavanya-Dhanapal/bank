@@ -7,8 +7,8 @@
 class BST_Node 
 {
 public:
-	BST_Node * left;
-	BST_Node * right;
+	BST_Node * left = nullptr;
+	BST_Node * right = nullptr;
 	string name;
 	string adress;
 	int account_number;
