@@ -13,9 +13,10 @@ void boot()
 	H.starthash();
 	T.load_Server();
 }
+void boot();
 int main()
 {
-	void boot();
+	
 
 	int condition=0;
 	while (condition != 4)
