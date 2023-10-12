@@ -8,7 +8,7 @@ class Node
 public:
 
 	Node * next = nullptr;
-	Node_1 * pre;
+	Node_1 * pre = nullptr;
 	int data;
 	explicit Node();
 	explicit Node(int);
