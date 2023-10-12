@@ -11,7 +11,7 @@ void Hashtable:: starthash()
 {
 	for (int i = 0; i < 12; i++)
 	{
-		shared_ptr<Node> temp1 = make_shared<Node>(i);
+		auto temp1 = make_shared<Node>(i);
 		if (start == nullptr)
 		{
 			start = temp1;
