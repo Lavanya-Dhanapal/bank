@@ -47,36 +47,40 @@ void BST_Tree::add_Account(string name, string address, int accountno, int passw
     }
 }
 
-BST_Node* BST_Tree:: delete_Account(BST_Node * root, int accountno)
+BST_Node* BST_Tree::delete_Account(BST_Node* root, int accountno)
 {
-	
-	if (root == nullptr)
-		cout << "it seems that Tree is empty OR You have entered wrong data" << endl;
-	else if (accountno < root->account_number)
-		root->left = delete_Account(root->left, accountno);
-	else if (accountno > Root->account_number)
-		root->right = delete_Account(root->right, accountno);
-	else
-	{
-		if (root->left && root->right)
-		{
-			findMax(root->left);
-			root->account_number = v.back();
-			root->left = delete_Account(root->left, root->account_number);
-		}
-		else
-		{
-			cout << "aya" << endl;
-			BST_Node* temp = root;
-			if (root->left == nullptr)
-				root = root->right;
-			else if (root->right == nullptr)
-				root = root->left;
-			delete temp;
-		}
-	}
-	return root;
+    if (root == nullptr)
+    {
+        cout << "The tree is empty or the data does not exist." << endl;
+    }
+    else if (accountno < root->account_number)
+    {
+        root->left = delete_Account(root->left, accountno);
+    }
+    else if (accountno > root->account_number)
+    {
+        root->right = delete_Account(root->right, accountno);
+    }
+    else
+    {
+        if (root->left && root->right)
+        {
+            // Node with two children
+            int maxInLeftSubtree = findMax(root->left);
+            root->account_number = maxInLeftSubtree;
+            root->left = delete_Account(root->left, maxInLeftSubtree);
+        }
+        else
+        {
+            // Node with one or zero children
+            BST_Node* temp = (root->left) ? root->left : root->right;
+            delete root;
+            return temp;
+        }
+    }
+    return root;
 }
+
 void BST_Tree::withdraw(int accountno,int amount)
 {
 	load_Server();
@@ -239,74 +243,55 @@ void BST_Tree:: findMax(BST_Node* root)
 		findMax(root->right);
 	}
 }
+
 void BST_Tree::load_Server()
 {
-	ifstream read;
-	read.open("server.txt", ios::app);
+    ifstream read("server.txt", ios::app);
 
-	string name = "";
-	string adress = "";
-	int accountno = 0;
-	int password = 0;
-	int balance = 0;
-	
-	while (!read.eof())
-	{
-		
-		
-		
-		getline(read, name);
-		getline(read, adress);
-		read >> accountno;
-		read >> password;
-		read >> balance;
-		read.ignore();
-		read.ignore();
+    string name;
+    string address;
+    int accountno;
+    int password;
+    int balance;
 
-		if (name!="" && adress != "" && accountno != 0 && password != 0 )
-		{
-			
-			auto temp = new BST_Node(name, adress, accountno, password, balance);
-			BST_Node * current = Root;
-			if (Root == nullptr)
-			{
+    while (read >> name >> ws >> address >> accountno >> password >> balance)
+    {
+        if (name.empty() || address.empty() || accountno == 0 || password == 0)
+            continue;
 
-				Root = temp;
-			}
-			else
-			{
-				while (true)
-				{
+        auto temp = make_shared<BST_Node>(name, address, accountno, password, balance);
+        BST_Node* current = Root;
 
-					if (accountno < current->account_number)
-					{
-						if (current->left == nullptr)
-						{
-							current->left = temp;
-							break;
-						}
-						current = current->left;
-					}
-
-					if (accountno > current->account_number)
-					{
-						if (current->right == nullptr)
-						{
-							current->right = temp;
-							break;
-						}
-						current = current->right;
-					}
-					if (accountno == current->account_number)
-					{
-						break;
-					}
-				}
-			}
-		}
-	}
-	read.close();
+        while (true)
+        {
+            if (accountno < current->account_number)
+            {
+                if (current->left == nullptr)
+                {
+                    current->left = temp;
+                    break;
+                }
+                current = current->left;
+            }
+            else if (accountno > current->account_number)
+            {
+                if (current->right == nullptr)
+                {
+                    current->right = temp;
+                    break;
+                }
+                current = current->right;
+            }
+            if (accountno == current->account_number)
+            {
+                break;
+            }
+        }
+    }
+    read.close();
 }
+
+
 void BST_Tree:: update_server(BST_Node *root)
 {
 	static int i = 0;
