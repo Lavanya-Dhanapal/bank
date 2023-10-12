@@ -148,7 +148,8 @@ void  Hashtable:: delete_password(int accountno)
 	ifstream read;
 	read.open("hashtable.txt");
 	vector <int> v;
-	int acc=0,pass=0;
+	int acc=0;
+	int pass=0;
 	int i = 0;
 	while (!read.eof())
 	{
@@ -166,11 +167,11 @@ void  Hashtable:: delete_password(int accountno)
 	ofstream write;
 	write.open("temp.txt", ios::app);
 	
-		for (int i = 0; i < v.size(); i++)
+		for (int j = 0; j < v.size(); j++)
 		{
-			if (v[i] != 0)
+			if (v[j] != 0)
 			{
-				write << v[i] << endl;
+				write << v[j] << endl;
 			}
 		}
 	
