@@ -7,7 +7,7 @@ class Node
 {
 public:
 
-	Node * next;
+	Node * next = nullptr;
 	Node_1 * pre;
 	int data;
 	explicit Node();
