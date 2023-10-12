@@ -1,9 +1,9 @@
 # include <iostream>
-using namespace std;
 # include "Hashtable.h"
 # include <vector>
+using namespace std;
 
-Hashtable:: Hashtable()
+Hashtable:: Hashtable(): start(nullptr)
 {
 	start = nullptr;
 }
@@ -11,14 +11,14 @@ void Hashtable:: starthash()
 {
 	for (int i = 0; i < 12; i++)
 	{
-		Node * temp1 = new Node(i);
+		shared_ptr<Node> temp1 = make_shared<Node>(i);
 		if (start == nullptr)
 		{
 			start = temp1;
 		}
 		else
 		{
-			Node * current = start;
+			shared_ptr<Node> current = start;
 			while (current ->next != nullptr)
 			{
 				current = current->next;
@@ -79,7 +79,9 @@ void Hashtable:: display()
 }
 void  Hashtable::loadhashtable()
 {
-	int acc = 0, r, pass;
+	int acc = 0;
+	int r;
+	int pass;
 
 	ifstream read;
 	read.open("hashtable.txt");
@@ -101,7 +103,8 @@ void  Hashtable::loadhashtable()
 			{
 				c = c->next;
 			}
-			Node_1 *temp = new Node_1(acc, pass);
+			
+			shared_ptr<Node_1> temp = make_shared<Node_1>(acc, pass);
 			if (c->pre == nullptr)
 			{
 				c->pre = temp;
